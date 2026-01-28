@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test">테스트</string>
+    <string name="my_parking_register_title">내 주차 등록</string>
+    <string name="mypage_title">마이페이지</string>
+    <string name="settings_title">설정</string>
+    <string name="open_close_time">운영시간</string>
+    <string name="parking_fee">기본요금</string>
+    <string name="extra_fee">추가요금</string>
+    <string name="choose_navigation_app">길 안내를 실행할 앱을 선택해 주세요.</string>
+    <string name="kakao_navi_app">카카오 내비</string>
+    <string name="register_my_parking">주차 등록</string>
+    <string name="parking_floor">주차 층수</string>
+    <string name="remove_floor">빼기</string>
+    <string name="add_floor">더하기</string>
+    <string name="oneline_memo">한 줄 메모</string>
+    <string name="example_memo">예: 엘리베이터 앞</string>
+    <string name="register_location_empty">위치 정보 없음</string>
+    <string name="register_spot_empty">정보 없음</string>
+    <string name="photo_shoot">사진 찍기</string>
+    <string name="click_photo_my_car">여기를 눌러 내 차를 찍어주세요!</string>
+    <string name="register_photo_tip">기둥 번호가 잘 나오게 찍으면 좋아요</string>
+    <string name="my_parking_register_photo">내 주차 사진</string>
+    <string name="parking_available">주차 여유</string>
+    <string name="parking_congested">주차 혼잡</string>
+    <string name="find_route">길찾기</string>
+    <string name="favorite_parking_title">즐겨찾는 주차장</string>
+    <string name="favorite_parking_empty">아직 즐겨찾기한 주차장이 없어요</string>
+    <string name="favorite_empty_desc_1">자주 가는 주차장을 저장해두면</string>
+    <string name="favorite_empty_desc_2">실시간 자리 현황을 바로 볼 수 있어요!</string>
+</resources>

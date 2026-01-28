@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- App Colors -->
+    <color name="main_indigo">#4338CA</color>
+    <color name="light_indigo">#4F46E5</color>
+    <color name="soft_indigo">#EEF2FF</color>
+
+    <!-- Status -->
+    <color name="success_green">#10B981</color>
+    <color name="light_green">#ECFDF5</color>
+    <color name="error_red">#F43F5E</color>
+    <color name="neutral_gray">#547488</color>
+
+    <!-- Background -->
+    <color name="bg_white">#F8FAFC</color>
+    <color name="pure_white">#FFFFFF</color>
+
+    <!-- Text -->
+    <color name="heading_title">#1E2938</color>
+    <color name="body_text">#475569</color>
+    <color name="caption_text">#94A388</color>
+
+</resources>
+

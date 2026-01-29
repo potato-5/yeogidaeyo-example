@@ -114,7 +114,7 @@ fun EntryScreen(
             ) {
                 loginNavGraph(navController, paddingValues)
                 homeNavGraph(navController, paddingValues)
-                myPageNavGraph(navController)
+                myPageNavGraph(navController,paddingValues)
                 registerNavGraph(navController, paddingValues)
             }
         }

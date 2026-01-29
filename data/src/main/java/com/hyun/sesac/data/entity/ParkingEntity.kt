@@ -11,8 +11,12 @@ data class ParkingEntity(
     val address: String,
     val latitude: Double,
     val longitude: Double,
-    val availableCount: Int?,
-    val totalCount: Int?,
+    val availableCount: Int,
+    val totalCount: Int,
+    val baseFee: String,
+    val baseTime: String,
+    val extraFee: String,
+    val extraTime: String,
     val isBookmarked: Boolean = false,
     val updatedTime: String
 )

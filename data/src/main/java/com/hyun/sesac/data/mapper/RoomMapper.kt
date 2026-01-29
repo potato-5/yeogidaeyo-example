@@ -6,12 +6,16 @@ import com.hyun.sesac.domain.model.Parking
 // 1. Entity(DB) -> Domain(앱) 변환
 fun ParkingEntity.toDomainParking() = Parking(
     id = this.id,
-    currentCnt = this.availableCount ?: 0,
+    currentCnt = this.availableCount,
     name = this.name,
     address = this.address,
     latitude = this.latitude,
     longitude = this.longitude,
-    totalCnt = this.totalCount ?: 0,
+    totalCnt = this.totalCount,
+    baseFee = this.baseFee,
+    baseTime = this.baseTime,
+    extraFee = this.extraFee,
+    extraTime = this.extraTime,
     isBookmarked = this.isBookmarked,
     updatedTime = this.updatedTime
 )
@@ -26,6 +30,10 @@ fun Parking.toParkingEntity() = ParkingEntity(
     latitude = this.latitude,
     longitude = this.longitude,
     totalCount = this.totalCnt,
+    baseFee = this.baseFee,
+    baseTime = this.baseTime,
+    extraFee = this.extraFee,
+    extraTime = this.extraTime,
     isBookmarked = this.isBookmarked,
     updatedTime = this.updatedTime
 )

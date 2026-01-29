@@ -66,14 +66,18 @@ class BookmarkRepositoryImpl @Inject constructor(
                     // firestore의 id와 매칭되는 코드를 id로 사용
                     ParkingEntity(
                         id = dto.parkingCode,
-                        name = dto.parkingName?: "정보 없음",
-                        address = dto.address?: "주소 없음",
+                        name = dto.parkingName ?: "정보 없음",
+                        address = dto.address ?: "주소 없음",
                         latitude = 0.0,
                         longitude = 0.0,
-                        totalCount = dto.capacity?.toInt(),
-                        availableCount = dto.currentCount?.toInt(),
+                        totalCount = dto.capacity?.toInt() ?: 0,
+                        availableCount = dto.currentCount?.toInt() ?: 0,
+                        baseFee = "기본 요금",
+                        baseTime = "기본 시간",
+                        extraFee = "추가 요금",
+                        extraTime = "추가 시간",
                         isBookmarked = isMyFavorite,
-                        updatedTime = dto.updateTime?: System.currentTimeMillis().toString()
+                        updatedTime = dto.updateTime?: System.currentTimeMillis().toString(),
                     )
                 }
                 parkingDao.insertAllParking(entites)

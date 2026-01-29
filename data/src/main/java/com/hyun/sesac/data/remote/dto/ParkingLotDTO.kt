@@ -18,6 +18,14 @@ data class ParkingLotDTO(
     var currentCnt : String = "",
     @get:PropertyName("total_capacity") @set:PropertyName("total_capacity")
     var totalCnt : String = "",
+    @get:PropertyName("base_fee") @set:PropertyName("base_fee")
+    var baseFee : String = "",
+    @get:PropertyName("base_time") @set:PropertyName("base_time")
+    var baseTime : String = "",
+    @get:PropertyName("extra_fee") @set:PropertyName("extra_fee")
+    var extraFee : String = "",
+    @get:PropertyName("extra_time") @set:PropertyName("extra_time")
+    var extraTime : String = "",
     @get:PropertyName("is_book_marked") @set:PropertyName("is_book_marked")
     var isBookmarked : Boolean = false
 )

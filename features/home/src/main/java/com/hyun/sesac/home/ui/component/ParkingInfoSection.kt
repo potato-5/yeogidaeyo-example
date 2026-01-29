@@ -3,7 +3,6 @@ package com.hyun.sesac.home.ui.component
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,22 +27,22 @@ fun ParkingInfoSection(
     ) {
         ParkingInfoRow(
             label = stringResource(id = R.string.open_close_time),
-            value = selectedSpot.address
+            value = "00:00 ~ 24:00"
         )
         ParkingDivider()
 
         ParkingInfoRow(
             label = stringResource(id = R.string.parking_fee),
-            value = selectedSpot.name,
-            subLabel = "최초 30분",
+            value = "${selectedSpot.baseFee}원",
+            subLabel = "최초 ${selectedSpot.baseTime}분",
             isFree = true
         )
         ParkingDivider()
 
         ParkingInfoRow(
             label = stringResource(id = R.string.extra_fee),
-            value = selectedSpot.name,
-            subLabel = "10분당",
+            value = "${selectedSpot.extraFee}원",
+            subLabel = "${selectedSpot.extraTime}분당",
             isHighlight = true
         )
     }

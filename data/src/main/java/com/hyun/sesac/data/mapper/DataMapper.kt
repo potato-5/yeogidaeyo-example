@@ -12,6 +12,10 @@ fun ParkingLotDTO.toDomainParking() = Parking(
     longitude = this.location?. longitude ?: 0.0,
     currentCnt = this.currentCnt.toIntOrNull() ?: 0,
     totalCnt = this.totalCnt.toIntOrNull() ?: 0,
+    baseFee = this.baseFee,
+    baseTime = this.baseTime,
+    extraFee = this.extraFee,
+    extraTime = this.extraTime,
     isBookmarked = this.isBookmarked
 )
 
@@ -22,6 +26,10 @@ fun Parking.toFirestoreParkingLotDTO() = mapOf(
     "location" to GeoPoint(this.latitude, this.longitude),
     "currentCnt" to this.currentCnt,
     "totalCnt" to this.totalCnt,
+    "baseFee" to this.baseFee,
+    "baseTime" to this.baseTime,
+    "extraFee" to this.extraFee,
+    "extraTime" to this.extraTime,
     "isBookmarked" to this.isBookmarked
 )
 

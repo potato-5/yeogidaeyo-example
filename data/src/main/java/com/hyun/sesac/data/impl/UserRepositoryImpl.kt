@@ -1,6 +1,5 @@
 package com.hyun.sesac.data.impl
 
-import androidx.datastore.preferences.core.stringPreferencesKey
 import com.hyun.sesac.data.dao.UserDao
 import com.hyun.sesac.data.entity.UserEntity
 import com.hyun.sesac.data.mapper.toDomainUser
@@ -9,9 +8,7 @@ import com.hyun.sesac.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import java.util.UUID
 import javax.inject.Inject
-import kotlin.text.get
 
 class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao

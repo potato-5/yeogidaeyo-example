@@ -57,6 +57,8 @@ dependencies {
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.retrofits)
     implementation(libs.bundles.okhttps)
+    implementation(libs.bundles.mlkit.ocr)
+
     ksp(libs.moshi.codegen)
 
     // Room DB

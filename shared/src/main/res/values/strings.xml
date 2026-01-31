@@ -20,6 +20,7 @@
     <string name="photo_shoot">사진 찍기</string>
     <string name="click_photo_my_car">여기를 눌러 내 차를 찍어주세요!</string>
     <string name="register_photo_tip">기둥 번호가 잘 나오게 찍으면 좋아요</string>
+    <string name="re_photo_shoot">재촬영하려면 터치하세요</string>
     <string name="my_parking_register_photo">내 주차 사진</string>
     <string name="parking_available">주차 여유</string>
     <string name="parking_congested">주차 혼잡</string>

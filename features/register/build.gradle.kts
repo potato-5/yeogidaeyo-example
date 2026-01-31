@@ -47,11 +47,13 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.compose.libraries)
+    implementation(libs.bundles.camerax)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.hilt.android)
+    implementation(libs.room.ktx)
     ksp(libs.hilt.compiler)
     ksp(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)

@@ -26,6 +26,7 @@ import com.hyun.sesac.home.navigation.homeNavGraph
 import com.hyun.sesac.mypage.navigation.myPageNavGraph
 import com.hyun.sesac.register.navigation.registerNavGraph
 import com.hyun.sesac.shared.navigation.LoginNavigationRoute
+import com.hyun.sesac.shared.navigation.RegisterNavigationRoute
 import com.hyun.sesac.shared.ui.theme.MainIndigo
 import com.hyun.sesac.ui.component.BottomAppBarItem
 import com.hyun.sesac.ui.viewmodel.MainViewModel
@@ -52,6 +53,7 @@ fun EntryScreen(
     val hideBottomBarRoutes = remember {
         listOf<KClass<*>>(
             LoginNavigationRoute.LoginScreen::class,
+            RegisterNavigationRoute.RegisterPhotoScreen::class
         )
     }
 

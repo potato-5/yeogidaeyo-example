@@ -1,10 +1,14 @@
 package com.hyun.sesac.data.di
 
 import com.hyun.sesac.data.impl.BookmarkRepositoryImpl
+import com.hyun.sesac.data.impl.RecognitionRepositoryImpl
+import com.hyun.sesac.data.impl.RegisterRepositoryImpl
 import com.hyun.sesac.data.remote.firebase.FirestoreParkingRepositoryImpl
 import com.hyun.sesac.data.impl.UserRepositoryImpl
 import com.hyun.sesac.domain.repository.BookmarkRepository
 import com.hyun.sesac.domain.repository.ParkingRepository
+import com.hyun.sesac.domain.repository.RecognitionRepository
+import com.hyun.sesac.domain.repository.RegisterRepository
 import com.hyun.sesac.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -32,4 +36,16 @@ abstract class RepositoryModule {
     abstract fun bindBookmarkRepository(
         bookmarkRepositoryImpl: BookmarkRepositoryImpl
     ): BookmarkRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindRecognitionRepository(
+        recognitionRepositoryImpl: RecognitionRepositoryImpl
+    ): RecognitionRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindRegisterRepository(
+        registerRepositoryImpl: RegisterRepositoryImpl
+    ): RegisterRepository
 }

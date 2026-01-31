@@ -13,13 +13,13 @@ class LoginGuestUseCase @Inject constructor(
         carNumber: String,
         provider: String
     ) {
-        val userInfo = UserInfo(
+        val userInfoModel = UserInfo(
             id = UUID.randomUUID().toString(),
             nickname = nickname,
             carNumber = carNumber,
             provider = provider
         )
 
-        repository.saveUserInfo(userInfo)
+        repository.saveUserInfo(userInfoModel)
     }
 }

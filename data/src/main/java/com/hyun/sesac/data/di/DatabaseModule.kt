@@ -3,6 +3,7 @@ package com.hyun.sesac.data.di
 import android.content.Context
 import androidx.room.Room
 import com.hyun.sesac.data.dao.ParkingDao
+import com.hyun.sesac.data.dao.RegisterDao
 import com.hyun.sesac.data.dao.UserDao
 import com.hyun.sesac.data.local.ParkingDatabase
 import dagger.Module
@@ -37,5 +38,11 @@ object DatabaseModule {
     @Singleton
     fun providerUserDao(database: ParkingDatabase): UserDao {
         return database.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun providerRegisterDao(database: ParkingDatabase): RegisterDao {
+        return database.registerDao()
     }
 }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,9 +22,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.hyun.sesac.shared.R
 import com.hyun.sesac.shared.ui.component.CommonWrapperCard
 import com.hyun.sesac.shared.ui.theme.HeadingTitle
@@ -38,8 +41,8 @@ import com.hyun.sesac.shared.ui.theme.SoftIndigo
 fun PhotoSection(
     modifier: Modifier = Modifier,
     capturedImageUri: Any? = null,
-    onTakePhotoClick: () -> Unit
-){
+    onTakePhotoClick: () -> Unit,
+) {
     CommonWrapperCard(
         modifier = modifier.padding(top = 8.dp)
     ) {
@@ -87,14 +90,22 @@ fun PhotoSection(
                 )
             }
         } else {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(160.dp)) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+                    .background(SoftIndigo)
+                    .clickable { onTakePhotoClick() }) {
+                AsyncImage(
+                    model = capturedImageUri,
+                    contentDescription = stringResource(id = R.string.my_parking_register_photo),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
                 Text(
-                    text = stringResource(id = R.string.my_parking_register_photo),
-                    modifier = Modifier.align(Alignment.Center),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = HeadingTitle
+                    text = stringResource(id = R.string.re_photo_shoot),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = PureWhite
                 )
             }
         }

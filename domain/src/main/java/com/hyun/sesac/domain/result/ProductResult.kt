@@ -1,4 +1,4 @@
-package com.pyo.sesac.domain.result
+package com.hyun.sesac.domain.result
 
 sealed class ProductResult<out T> {
     data object NoConstructor : ProductResult<Nothing>()

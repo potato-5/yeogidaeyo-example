@@ -14,10 +14,10 @@ interface UserDao {
     suspend fun saveUser(user: UserEntity)
 
     // 로그인 여부
-    @Query("SELECT * FROM user_table LIMIT 1")
+    @Query("SELECT * FROM ${UserEntity.TABLE_NAME} LIMIT 1")
     fun getUser(): Flow<UserEntity?>
 
     // 게스트 삭제
-    @Query("DELETE FROM user_table")
+    @Query("DELETE FROM ${UserEntity.TABLE_NAME}")
     suspend fun deleteUser()
 }

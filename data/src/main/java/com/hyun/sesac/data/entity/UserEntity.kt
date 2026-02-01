@@ -10,11 +10,15 @@ enum class AuthProvider {
     GOOGLE
 }
 
-@Entity(tableName = "user_table")
+@Entity(tableName = UserEntity.TABLE_NAME)
 data class UserEntity(
     @PrimaryKey
     val id: String,
     val nickname: String,
     val carNum: String,
     val provider: String
-)
+){
+    companion object {
+        const val TABLE_NAME = "user_table"
+    }
+}

@@ -28,6 +28,7 @@ fun RegisterScreen(
     onCameraClick: () -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val isRegisterSaved = uiState.savedItem == null
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
     // 기존 등록 화면
     Column(
@@ -48,6 +49,7 @@ fun RegisterScreen(
 
         PhotoSection(
             modifier = Modifier,
+            editEnabled = isRegisterSaved,
             capturedImageUri = uiState.capturedImageUri?.toString(), // Uri -> String 변환
             onTakePhotoClick = {
                 // 권한 확인 후 카메라 열기 시도
@@ -62,20 +64,22 @@ fun RegisterScreen(
         InputSection(
             floor = uiState.floor,
             memo = uiState.memo,
+            editEnabled = isRegisterSaved,
             modifier = Modifier,
             onMemoChange = { viewModel.onMemoChanged(it) },
-            onFloorChange = { },
+            onFloorUp = { viewModel.onFloorLevelChanged(isUp = true) },
+            onFloorDown = { viewModel.onFloorLevelChanged(isUp = false) }
         )
 
-        val isSaved = uiState.savedItem != null
         CommonButton(
             modifier = Modifier.padding(vertical = 16.dp),
-            text = stringResource(id = R.string.register_my_parking),
+            text = if(isRegisterSaved) stringResource(id = R.string.register_my_parking) else { stringResource(id = R.string.delete_my_parking) },
+            isRegister = isRegisterSaved,
             onClick = {
-                if(isSaved){
-                    viewModel.deleteRegister()
-                }else{
+                if(isRegisterSaved){
                     viewModel.saveRegister()
+                }else{
+                    viewModel.deleteRegister()
                 }
             }
         )

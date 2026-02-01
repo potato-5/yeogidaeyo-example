@@ -1,4 +1,4 @@
-package com.hyun.sesac.data.service
+package com.hyun.sesac.home.service
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -10,9 +10,9 @@ import android.os.IBinder
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import com.hyun.sesac.data.R
-import com.hyun.sesac.data.di.CoroutinesModule.providesIoDispatcher
 import com.hyun.sesac.domain.repository.CurrentLocationRepository
+import com.hyun.sesac.domain.result.ProductResult
+import com.hyun.sesac.home.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,7 +21,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import okhttp3.Dispatcher
 import javax.inject.Inject
 
 const val NOTIFICATION_ID = 12345
@@ -43,11 +42,24 @@ class CurrentLocationService : Service() {
         }
         Log.e("TAG", "Service Start")
         locationRepository.getCurrentLocationUpdates()
-            .onEach { location ->
-                /**
-                 * 필요하다면 여기서 추가작업(클라우드 전송, Room DB 기록, File 누적 등)
-                 */
-                Log.d("TAG", "새로운 위치 수신: ${location.latitude}, ${location.longitude}")
+            .onEach { result -> // 변수명을 location -> result로 바꾸는 게 덜 헷갈립니다.
+
+                // [수정] 상자(ProductResult)를 열어서 확인해야 합니다!
+                when(result) {
+                    is ProductResult.Success -> {
+                        val location = result.resultData // 진짜 데이터 꺼내기
+                        Log.d("TAG", "새로운 위치 수신: ${location.latitude}, ${location.longitude}")
+
+                        // * 필요하다면 여기서 추가작업(클라우드 전송, Room DB 기록, File 누적 등
+                    }
+                    is ProductResult.Loading -> {
+                        // 로딩 중 (서비스에서는 딱히 할 게 없을 수 있음)
+                    }
+                    is ProductResult.RoomDBError -> {
+                        Log.e("TAG", "위치 에러: ${result.exception.message}")
+                    }
+                    else -> {} // 나머지 상태 처리
+                }
             }
             .catch { e -> e.printStackTrace() }
             .launchIn(serviceScope)

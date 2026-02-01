@@ -40,6 +40,7 @@ import com.hyun.sesac.shared.ui.theme.SoftIndigo
 @Composable
 fun PhotoSection(
     modifier: Modifier = Modifier,
+    editEnabled: Boolean,
     capturedImageUri: Any? = null,
     onTakePhotoClick: () -> Unit,
 ) {
@@ -95,7 +96,8 @@ fun PhotoSection(
                     .fillMaxWidth()
                     .height(300.dp)
                     .background(SoftIndigo)
-                    .clickable { onTakePhotoClick() }) {
+                    .clickable {
+                        if(editEnabled)onTakePhotoClick()}) {
                 AsyncImage(
                     model = capturedImageUri,
                     contentDescription = stringResource(id = R.string.my_parking_register_photo),
@@ -120,6 +122,7 @@ fun PhotoSectionPreview() {
         PhotoSection(
             capturedImageUri = null,
             onTakePhotoClick = {},
+            editEnabled = true,
         )
     }
 }

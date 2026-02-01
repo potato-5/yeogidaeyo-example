@@ -30,7 +30,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YeogidaeyoTheme">
         <service
-            android:name=".data.service.CurrentLocationService"
+            android:name=".home.service.CurrentLocationService"
             android:enabled="true"
             android:foregroundServiceType="location"
             tools:ignore="ExportedService" />

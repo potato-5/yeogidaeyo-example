@@ -2,9 +2,12 @@ package com.hyun.sesac.data.remote.firebase
 
 import com.hyun.sesac.data.datasource.ParkingDataSource
 import com.hyun.sesac.data.di.IoDispatcher
+import com.hyun.sesac.data.impl.utils.asProductResult
+import com.hyun.sesac.data.impl.utils.safeProductResultCall
 import com.hyun.sesac.domain.common.DataResourceResult
 import com.hyun.sesac.domain.model.Parking
 import com.hyun.sesac.domain.repository.ParkingRepository
+import com.hyun.sesac.domain.result.ProductResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -19,37 +22,27 @@ class FirestoreParkingRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ParkingRepository {
 
-    override fun read() = dataSource.read()
-        .map { parkingList ->
-            DataResourceResult.Success(parkingList) as DataResourceResult<List<Parking>>
-        }
-        .catch { e ->
-            emit(DataResourceResult.Failure(e))
-        }
-        .onStart { emit(DataResourceResult.Loading)}
-        // di에다 코루틴 inject로 주입 해야 됨
-        // hiltwithmvvmpj 코드 참고
-        .flowOn(ioDispatcher)
-
-    private fun wrapCUDOperation(
-        operation: suspend () -> Unit
-    ): Flow<DataResourceResult<Unit>> = flow {
-        emit(DataResourceResult.Loading)
-        operation()
-        emit(DataResourceResult.Success(Unit))
-    }.catch{ e->
-        emit(DataResourceResult.Failure(e))
-    }.flowOn(ioDispatcher)
-
-    override fun update(parkingInfo: Parking) = wrapCUDOperation {
-        dataSource.update(parkingInfo)
+    override fun read(): Flow<ProductResult<List<Parking>>> {
+        return dataSource.read()
+            .asProductResult()
+            .flowOn(ioDispatcher)
     }
 
-    override fun delete(parkingID: String) = wrapCUDOperation {
-        dataSource.delete(parkingID)
+    override suspend fun update(parkingInfo: Parking): ProductResult<Unit> {
+        return safeProductResultCall {
+            dataSource.update(parkingInfo)
+        }
     }
 
-    override fun create(parkingInfo: Parking) = wrapCUDOperation {
-        dataSource.create(parkingInfo)
+    override suspend fun delete(parkingID: String): ProductResult<Unit> {
+        return safeProductResultCall {
+            dataSource.delete(parkingID)
+        }
+    }
+
+    override suspend fun create(parkingInfo: Parking): ProductResult<Unit> {
+        return safeProductResultCall {
+            dataSource.create(parkingInfo)
+        }
     }
 }

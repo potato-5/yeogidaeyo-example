@@ -42,9 +42,11 @@ import com.hyun.sesac.shared.ui.theme.SoftIndigo
 fun InputSection(
     floor: String,
     memo: String,
+    editEnabled: Boolean,
     modifier: Modifier = Modifier,
     onMemoChange: (String) -> Unit,
-    onFloorChange: (Int) -> Unit,
+    onFloorUp: () -> Unit,
+    onFloorDown: () -> Unit,
     ){
     CommonWrapperCard(
         modifier = modifier.padding(top = 1.dp)
@@ -61,57 +63,13 @@ fun InputSection(
                     style = MaterialTheme.typography.bodyLarge,
                     color = BodyText
                 )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .border(
-                            width = 1.dp,
-                            color = SoftIndigo,
-                            shape = RoundedCornerShape(8.dp)
-                        )
-                ) {
-                    IconButton(
-                        onClick = { onFloorChange(-1) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Remove,
-                            contentDescription = stringResource(id = R.string.remove_floor),
-                            tint = MainIndigo
-                        )
-                    }
 
-                    Spacer(
-                        modifier = Modifier
-                            .width(1.dp)
-                            .height(24.dp)
-                            .background(SoftIndigo)
-                    )
-
-                    Text(
-                        text = floor,
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp),
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MainIndigo,
-                    )
-
-                    Spacer(
-                        modifier = Modifier
-                            .width(1.dp)
-                            .height(24.dp)
-                            .background(SoftIndigo)
-                    )
-
-                    IconButton(
-                        onClick = { onFloorChange(1) }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = stringResource(id = R.string.add_floor),
-                            tint = MainIndigo
-                        )
-                    }
-                }
+                FloorCounter(
+                    floorText = floor,
+                    editEnabled = editEnabled,
+                    onUpClick = onFloorUp,
+                    onDownClick = onFloorDown
+                )
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -164,6 +122,7 @@ fun InputSection(
                             focusedPlaceholderColor = BodyText,
                             unfocusedPlaceholderColor = BodyText
                         ),
+                        enabled = editEnabled,
                         singleLine = true
                     )
                 }
@@ -181,7 +140,9 @@ fun InputSectionPreview() {
             floor = "1",
             memo = stringResource(id = R.string.example_memo),
             onMemoChange = {},
-            onFloorChange = {},
+            editEnabled = true,
+            onFloorUp = {},
+            onFloorDown = {},
         )
     }
 }

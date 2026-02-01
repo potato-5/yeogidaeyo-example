@@ -5,7 +5,7 @@ import com.google.firebase.firestore.IgnoreExtraProperties
 import com.google.firebase.firestore.PropertyName
 
 @IgnoreExtraProperties
-data class ParkingLotDTO(
+data class ParkingInfoDto(
     @get:PropertyName("parking_cd") @set:PropertyName("parking_cd")
     var parkingCd: String = "",
     @get:PropertyName("parking_nm") @set:PropertyName("parking_nm")

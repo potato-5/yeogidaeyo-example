@@ -3,7 +3,7 @@ package com.hyun.sesac.data.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "register_parking_table")
+@Entity(tableName = RegisterEntity.TABLE_NAME)
 data class RegisterEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
@@ -14,4 +14,8 @@ data class RegisterEntity(
     val latitude: Double,
     val longitude: Double,
     val savedAt: Long
-)
+){
+    companion object {
+        const val TABLE_NAME = "register_parking_table"
+    }
+}

@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.hyun.sesac.shared.ui.theme.ErrorRed
 import com.hyun.sesac.shared.ui.theme.LightIndigo
 import com.hyun.sesac.shared.ui.theme.PureWhite
 
@@ -19,8 +20,8 @@ import com.hyun.sesac.shared.ui.theme.PureWhite
 fun CommonButton(
     modifier: Modifier = Modifier,
     text: String,
-    containerColor: Color = LightIndigo,
-    contentColor: Color = PureWhite,
+    //containerColor: Color = LightIndigo,
+    isRegister: Boolean,
     onClick: () -> Unit,
 ) {
     Button(
@@ -30,8 +31,7 @@ fun CommonButton(
         onClick = onClick,
         shape = RoundedCornerShape(20.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = containerColor,
-            contentColor = contentColor
+            containerColor = if(isRegister) LightIndigo else ErrorRed,
         )
     ) {
         Text(

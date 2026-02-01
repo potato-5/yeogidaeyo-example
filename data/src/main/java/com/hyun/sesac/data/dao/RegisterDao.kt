@@ -16,6 +16,6 @@ interface RegisterDao {
     @Delete
     suspend fun deleteRegister(item: RegisterEntity)
 
-    @Query("SELECT * FROM register_parking_table ORDER BY savedAt DESC LIMIT 1")
+    @Query("SELECT * FROM ${RegisterEntity.TABLE_NAME} ORDER BY savedAt DESC LIMIT 1")
     fun getRecentParking(): Flow<RegisterEntity?>
 }

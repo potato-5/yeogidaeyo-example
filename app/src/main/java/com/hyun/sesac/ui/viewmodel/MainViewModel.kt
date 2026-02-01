@@ -3,12 +3,14 @@ package com.hyun.sesac.ui.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hyun.sesac.domain.repository.UserRepository
+import com.hyun.sesac.domain.result.ProductResult
 import com.hyun.sesac.shared.navigation.HomeNavigationRoute
 import com.hyun.sesac.shared.navigation.LoginNavigationRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,16 +29,30 @@ class MainViewModel @Inject constructor(
 
     private fun checkLoginStatus() {
         viewModelScope.launch {
-            delay(2000)
-            // Room DB에서 유저 정보 확인 (first()로 현재 값만 딱 가져옴)
-            val user = userRepository.currentUser().first()
+            val minSplashTime = 2000L
+            val startTime = System.currentTimeMillis()
 
-            if (user != null) {
-                // 로그인 정보 있음 -> 홈으로
+            // Room DB에서 유저 정보 확인 (first()로 현재 값만 딱 가져옴)
+            val result = userRepository.currentUser()
+                .filter { it !is ProductResult.Loading }
+                .first()
+
+            val isLoggedIn = if (result is ProductResult.Success) {
+                // 성공했고, 그 안의 데이터가 null이 아니면 로그인 된 것!
+                result.resultData != null
+            } else {
+                // 에러가 났거나 데이터가 없으면 로그인 안 된 것
+                false
+            }
+
+            val elapsedTime = System.currentTimeMillis() - startTime
+            if (elapsedTime < minSplashTime) {
+                delay(minSplashTime - elapsedTime)
+            }
+
+            if (isLoggedIn) {
                 _startDestination.value = HomeNavigationRoute.HomeTab
             } else {
-                // 로그인 정보 없음 -> 로그인 화면으로
-                // (import 주의: Step 1에서 만든 Route)
                 _startDestination.value = LoginNavigationRoute.LoginScreen
             }
         }

@@ -1,5 +1,6 @@
 package com.hyun.sesac.data.di
 
+import com.hyun.sesac.data.remote.api.KakaoApiService
 import com.hyun.sesac.data.remote.api.ParkingApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -52,5 +53,22 @@ object ApiModule {
     @Singleton
     fun provideParkingApiService(retrofit: Retrofit): ParkingApiService {
         return retrofit.create(ParkingApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideKakaoApiService(
+    ): KakaoApiService {
+        val BASE_URL = "https://dapi.kakao.com/"
+
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory()) // <--- 이 줄이 핵심! 꼭 추가해야 함!
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi)) // Moshi 사용 시
+            .build()
+            .create(KakaoApiService::class.java)
     }
 }

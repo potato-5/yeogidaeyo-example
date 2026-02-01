@@ -1,10 +1,10 @@
 package com.hyun.sesac.data.mapper
 
 import com.google.firebase.firestore.GeoPoint
-import com.hyun.sesac.data.remote.dto.ParkingLotDTO
+import com.hyun.sesac.data.remote.dto.ParkingInfoDto
 import com.hyun.sesac.domain.model.Parking
 
-fun ParkingLotDTO.toDomainParking() = Parking(
+fun ParkingInfoDto.toDomainParking() = Parking(
     id = this.parkingCd,
     name = this.parkingNm,
     address = this.address,
@@ -33,5 +33,5 @@ fun Parking.toFirestoreParkingLotDTO() = mapOf(
     "isBookmarked" to this.isBookmarked
 )
 
-fun List<ParkingLotDTO>.toDomainParkingLotList() =
+fun List<ParkingInfoDto>.toDomainParkingLotList() =
     this.map { it.toDomainParking() }.toList()

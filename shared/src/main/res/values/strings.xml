@@ -10,6 +10,7 @@
     <string name="choose_navigation_app">길 안내를 실행할 앱을 선택해 주세요.</string>
     <string name="kakao_navi_app">카카오 내비</string>
     <string name="register_my_parking">주차 등록</string>
+    <string name="delete_my_parking">삭제</string>
     <string name="parking_floor">주차 층수</string>
     <string name="remove_floor">빼기</string>
     <string name="add_floor">더하기</string>

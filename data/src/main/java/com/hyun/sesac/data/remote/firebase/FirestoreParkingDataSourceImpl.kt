@@ -1,10 +1,11 @@
 package com.hyun.sesac.data.remote.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.hyun.sesac.data.common.FirestoreCollection
 import com.hyun.sesac.data.datasource.ParkingDataSource
 import com.hyun.sesac.data.mapper.toDomainParkingLotList
 import com.hyun.sesac.data.mapper.toFirestoreParkingLotDTO
-import com.hyun.sesac.data.remote.dto.ParkingLotDTO
+import com.hyun.sesac.data.remote.dto.ParkingInfoDto
 import com.hyun.sesac.domain.model.Parking
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -17,14 +18,14 @@ class FirestoreParkingDataSourceImpl @Inject constructor(
 ) : ParkingDataSource {
 
     override fun read(): Flow<List<Parking>> = callbackFlow {
-        val listener = firestore.collection("seoul_parking_collection")
+        val listener = firestore.collection(FirestoreCollection.PARKING)
             .addSnapshotListener { snapshot, e ->
                 if(e != null){
                     close(e)
                     return@addSnapshotListener
                 }
                 try{
-                    val parkingDtoList = snapshot?.toObjects(ParkingLotDTO::class.java) ?: emptyList()
+                    val parkingDtoList = snapshot?.toObjects(ParkingInfoDto::class.java) ?: emptyList()
                     trySend(parkingDtoList.toDomainParkingLotList())
                 }catch(mappingError: Exception){
                     close(mappingError)
@@ -34,14 +35,14 @@ class FirestoreParkingDataSourceImpl @Inject constructor(
     }
 
     override suspend fun delete(parkingID: String) {
-        firestore.collection("seoul_parking_collection")
+        firestore.collection(FirestoreCollection.PARKING)
             .document(parkingID)
             .delete()
             .await()
     }
 
     override suspend fun create(parking: Parking) {
-        firestore.collection("seoul_parking_collection")
+        firestore.collection(FirestoreCollection.PARKING)
             .document(parking.id)
             .set(parking.toFirestoreParkingLotDTO())
             .await()
@@ -49,7 +50,7 @@ class FirestoreParkingDataSourceImpl @Inject constructor(
 
     // create와 update 로직이 같음
     override suspend fun update(parking: Parking) {
-        firestore.collection("seoul_parking_collection")
+        firestore.collection(FirestoreCollection.PARKING)
             .document(parking.id)
             .set(parking.toFirestoreParkingLotDTO())
             .await()

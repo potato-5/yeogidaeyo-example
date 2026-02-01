@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
@@ -40,14 +41,15 @@ import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.hyun.sesac.domain.result.ProductResult
 import com.hyun.sesac.home.viewmodel.CurrentLocationViewModel
 import com.hyun.sesac.home.viewmodel.MapViewModel
 import com.hyun.sesac.shared.ui.component.commonToast
 
 @Composable
 fun GoogleMapScreen(
-    locationViewModel: CurrentLocationViewModel,
-    parkingViewModel: MapViewModel
+    locationViewModel: CurrentLocationViewModel = hiltViewModel(),
+    parkingViewModel: MapViewModel = hiltViewModel(),
 ) {
     val ctx = LocalContext.current
 
@@ -135,12 +137,12 @@ fun GoogleMapScreen(
         }
     }
 
-    // TODO 주차장 데이터
-    val parkingSpots by parkingViewModel.parkingSpots.collectAsStateWithLifecycle()
+    // uiState 전체 구독
+    val uiState by parkingViewModel.uiState.collectAsStateWithLifecycle()
     // TODO 초기 기본 값 서울 시청
     val seoulCityHall = LatLng(37.566535, 126.9779692)
     // TODO 현재 위치 ( 데이터 용 )
-    val currentLocation by locationViewModel.currentLocation.collectAsStateWithLifecycle(initialValue = null)
+    val currentLocationResult by locationViewModel.currentLocation.collectAsStateWithLifecycle()
 
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(seoulCityHall, 15f)
@@ -148,10 +150,13 @@ fun GoogleMapScreen(
     val markerState = remember { MarkerState(position = seoulCityHall) }
 
     // camera 이동 + 위치 반영
-    LaunchedEffect(currentLocation) {
-        currentLocation?.let { newLocation ->
+    LaunchedEffect(currentLocationResult) {
+        if (currentLocationResult is ProductResult.Success) {
+            // 진짜 데이터 꺼내기 (.resultData)
+            val newLocation = (currentLocationResult as ProductResult.Success).resultData
+
             val latLng = LatLng(newLocation.latitude, newLocation.longitude)
-            markerState.position =  latLng
+            markerState.position = latLng
             cameraPositionState.animate(
                 CameraUpdateFactory.newCameraPosition(
                     CameraPosition.fromLatLngZoom(latLng, 15f)
@@ -188,8 +193,18 @@ fun GoogleMapScreen(
                 title = "내 위치"
             )
         }*/
-
-        parkingSpots.forEach { spot ->
+        uiState.parkingSpots.forEach { spot ->
+            Marker(
+                state = MarkerState(LatLng(spot.latitude, spot.longitude)),
+                title = spot.name,
+                // [참고] 아이콘 색상 변경 등이 필요하면 spot.isBookmarked 사용 가능
+                onClick = { marker ->
+                    parkingViewModel.onSpotSelected(spot)
+                    false
+                }
+            )
+        }
+        /*parkingSpots.forEach { spot ->
             Marker(
                 state = MarkerState(LatLng(spot.latitude, spot.longitude)),
                 title = spot.name,
@@ -199,7 +214,7 @@ fun GoogleMapScreen(
                     false
                 }
             )
-        }
+        }*/
     }
 }
 

@@ -1,7 +1,9 @@
 package com.hyun.sesac.auth.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,24 +18,37 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.hyun.sesac.auth.viewmodel.LoginEvent
 import com.hyun.sesac.auth.viewmodel.LoginViewModel
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun LoginScreen(
+    paddingValues: PaddingValues,
     onLoginSuccess: () -> Unit, // 로그인 성공 시 홈으로 이동하는 콜백
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    val nickname by viewModel.nickname.collectAsStateWithLifecycle()
-    val carNum by viewModel.carNum.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     // ViewModel의 성공 신호 감지
     LaunchedEffect(true) {
-        viewModel.loginEvent.collectLatest {
-            onLoginSuccess() // 네비게이션 이동 (Login -> Home)
+        viewModel.event.collectLatest { event ->
+            when(event){
+                is LoginEvent.NavigateToHome -> {
+                    onLoginSuccess()
+                }
+                is LoginEvent.NavigateToLogin -> {
+                    // 로그아웃 처리
+                }
+                is LoginEvent.ShowToast -> {
+                    Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
@@ -48,7 +63,7 @@ fun LoginScreen(
 
         // 닉네임 입력
         OutlinedTextField(
-            value = nickname,
+            value = uiState.nickname,
             onValueChange = viewModel::updateNickname,
             label = { Text("닉네임") },
             singleLine = true,
@@ -59,7 +74,7 @@ fun LoginScreen(
 
         // 차번호 입력
         OutlinedTextField(
-            value = carNum,
+            value = uiState.carNum,
             onValueChange = viewModel::updateCarNum,
             label = { Text("차량 번호 (예: 12가 3456)") },
             singleLine = true,
@@ -72,7 +87,7 @@ fun LoginScreen(
         Button(
             onClick = { viewModel.onGuestLoginClick() },
             modifier = Modifier.fillMaxWidth().height(50.dp),
-            enabled = nickname.isNotBlank() && carNum.isNotBlank() // 둘 다 입력해야 활성화
+            enabled = uiState.nickname.isNotBlank() && uiState.carNum.isNotBlank() // 둘 다 입력해야 활성화
         ) {
             Text("시작하기")
         }

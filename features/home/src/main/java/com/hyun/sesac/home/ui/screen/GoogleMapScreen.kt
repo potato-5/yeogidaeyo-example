@@ -32,8 +32,10 @@ import com.google.android.gms.location.LocationSettingsResponse
 import com.google.android.gms.location.Priority
 import com.google.android.gms.location.SettingsClient
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.tasks.Task
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
@@ -165,9 +167,18 @@ fun GoogleMapScreen(
         }
     }
 
+    // 수도권 한정 제한
+    val seoulMetroBounds = LatLngBounds(
+        LatLng(37.16, 126.60),
+        LatLng(37.75, 127.20)
+    )
+
     // TODO 내 위치 표시 속성 ( 파란점 )
     val mapProperties = remember(isLocationPermissionGranted) {
         MapProperties(
+            latLngBoundsForCameraTarget = seoulMetroBounds,
+            minZoomPreference = 10f,
+            maxZoomPreference = 20f,
             isMyLocationEnabled = isLocationPermissionGranted
         )
     }
@@ -187,12 +198,6 @@ fun GoogleMapScreen(
         }
     ) {
         // TODO MARKER 말고 내 위치 수정
-        /* currentLocation?.let {
-            Marker(
-                state = MarkerState(LatLng(it.latitude, it.longitude)),
-                title = "내 위치"
-            )
-        }*/
         uiState.parkingSpots.forEach { spot ->
             Marker(
                 state = MarkerState(LatLng(spot.latitude, spot.longitude)),
@@ -204,17 +209,14 @@ fun GoogleMapScreen(
                 }
             )
         }
-        /*parkingSpots.forEach { spot ->
+
+        uiState.searchedLocation?.let { location ->
             Marker(
-                state = MarkerState(LatLng(spot.latitude, spot.longitude)),
-                title = spot.name,
-                //snippet = spot.priceInfo
-                onClick = { marker ->
-                    parkingViewModel.onSpotSelected(spot)
-                    false
-                }
+                state = MarkerState(position = LatLng(location.y.toDouble(), location.x.toDouble())),
+                title = location.placeName,
+                icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
             )
-        }*/
+        }
     }
 }
 

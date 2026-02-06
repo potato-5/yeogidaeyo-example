@@ -12,9 +12,9 @@ fun NavGraphBuilder.loginNavGraph(
     navController: NavController,
     paddingValues: PaddingValues,
 ) {
-
     composable<LoginNavigationRoute.LoginScreen> {
         LoginScreen(
+            paddingValues = paddingValues,
             onLoginSuccess = {
                 navController.navigate(HomeNavigationRoute.HomeTab) {
                     popUpTo(LoginNavigationRoute.LoginScreen) {

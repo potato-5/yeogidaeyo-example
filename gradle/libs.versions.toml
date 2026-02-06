@@ -9,13 +9,13 @@ ksp = "2.2.0-2.0.2"
 room = "2.7.2"
 
 # Camera X
-camerax = "1.3.1" # 최신 안정화 버전 기준
+camerax = "1.3.1"
 
 # Accompanist-permission
-accompanist = "0.34.0" # 최신 버전 확인 필요
+accompanist = "0.37.3"
 
 # ML Kit
-mlkitTextRecognition = "16.0.0"
+mlkitTextRecognition = "16.0.1"
 
 #Coil
 coil = "2.7.0"
@@ -48,8 +48,8 @@ kotlinxSerializationJson = "1.9.0"
 materialIconsExtended = "1.7.8"
 
 #Compose Map & Fused Location
-mapsCompose = "6.12.2"
-playServicesMaps = "19.2.0"
+mapsCompose = "8.0.1"
+playServicesMaps = "20.0.0"
 playServicesLocation = "21.3.0"
 googleGmsServices = "4.4.4"
 

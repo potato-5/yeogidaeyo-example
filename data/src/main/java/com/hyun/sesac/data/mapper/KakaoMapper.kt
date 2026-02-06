@@ -1,6 +1,8 @@
 package com.hyun.sesac.data.mapper
 
+import com.hyun.sesac.data.remote.dto.PlaceDocument
 import com.hyun.sesac.domain.model.KakaoApiModel
+import com.hyun.sesac.domain.model.KakaoSearchModel
 
 // 카카오 응답에서 가장 적절한 주소 문자열 뽑아내는 함수
 fun KakaoApiModel.toBestAddressString(): String? {
@@ -20,4 +22,16 @@ fun KakaoApiModel.toBestAddressString(): String? {
             document.address?.address_name
         }
     }
+}
+
+fun PlaceDocument.toDomain(): KakaoSearchModel {
+    return KakaoSearchModel(
+        id = this.id,
+        placeName = this.placeName,
+        address = this.addressName,
+        roadAddress = this.roadAddressName,
+        x = this.x,
+        y = this.y,
+        distance = this.distance
+    )
 }

@@ -6,4 +6,7 @@ import kotlinx.serialization.Serializable
 sealed interface MyPageNavigationRoute : YeogidaeyoNavigation {
     @Serializable
     data object MyPageTab : MyPageNavigationRoute
+
+    @Serializable
+    data object SettingTab : MyPageNavigationRoute
 }

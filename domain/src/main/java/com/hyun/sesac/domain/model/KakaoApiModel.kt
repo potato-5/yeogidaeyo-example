@@ -17,3 +17,14 @@ data class RoadAddress(
 data class Address(
     val address_name: String       // 전체 지번 주소
 )
+
+// 검색
+data class KakaoSearchModel(
+    val id: String,
+    val placeName: String,
+    val address: String,
+    val roadAddress: String,
+    val x: String,
+    val y: String,
+    val distance: String
+)

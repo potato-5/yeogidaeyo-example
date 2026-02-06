@@ -17,6 +17,11 @@ fun NavGraphBuilder.homeNavGraph(
             /*onNavigateToSearch = {
                 navController.navigate(HomeNavigationRoute.SearchScreen)
             }*/
+            /*navController.navigate(HomeNavigationRoute.HomeTab) {
+                popUpTo(LoginNavigationRoute.LoginScreen) {
+                    inclusive = true
+                }
+                launchSingleTop = true*/
         )
     }
 /*    composable<HomeNavigationRoute.SearchScreen>{

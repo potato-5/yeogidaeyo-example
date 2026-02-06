@@ -1,5 +1,6 @@
 package com.hyun.sesac.mypage.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,11 +29,12 @@ import com.hyun.sesac.shared.ui.theme.PreviewTheme
 fun FavoriteItemSection(
     modifier: Modifier = Modifier,
     item: Parking,
-    onItemClick: () -> Unit = {}
+    onItemClick: () -> Unit,
+    onToggleClick: () -> Unit
 ){
     CommonWrapperCard(
         modifier = modifier.padding(top = 8.dp)
-        // .clickable { onItemClick() }
+         .clickable { onToggleClick() }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -82,6 +84,7 @@ fun FavoriteItemSection(
     }
 }
 
+/*
 // Preview
 @Preview(showBackground = true)
 @Composable
@@ -105,4 +108,4 @@ fun FavoriteItemPreview() {
             )
         }
     }
-}
+}*/

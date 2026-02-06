@@ -1,12 +1,14 @@
 package com.hyun.sesac.data.di
 
-import com.hyun.sesac.data.impl.BookmarkRepositoryImpl
+import com.hyun.sesac.data.impl.KakaoApiRepositoryImpl
+import com.hyun.sesac.data.impl.RoomParkingRepositoryImpl
 import com.hyun.sesac.data.impl.RecognitionRepositoryImpl
 import com.hyun.sesac.data.impl.RegisterRepositoryImpl
 import com.hyun.sesac.data.remote.firebase.FirestoreParkingRepositoryImpl
 import com.hyun.sesac.data.impl.UserRepositoryImpl
-import com.hyun.sesac.domain.repository.BookmarkRepository
-import com.hyun.sesac.domain.repository.ParkingRepository
+import com.hyun.sesac.domain.repository.RoomParkingRepository
+import com.hyun.sesac.domain.repository.FireStoreParkingRepository
+import com.hyun.sesac.domain.repository.KakaoApiRepository
 import com.hyun.sesac.domain.repository.RecognitionRepository
 import com.hyun.sesac.domain.repository.RegisterRepository
 import com.hyun.sesac.domain.repository.UserRepository
@@ -23,7 +25,7 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun bindParkingRepository(
         impl: FirestoreParkingRepositoryImpl
-    ): ParkingRepository
+    ): FireStoreParkingRepository
 
     @Binds
     @Singleton
@@ -33,9 +35,9 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindBookmarkRepository(
-        bookmarkRepositoryImpl: BookmarkRepositoryImpl
-    ): BookmarkRepository
+    abstract fun bindRoomParkingRepository(
+        roomRepositoryImpl: RoomParkingRepositoryImpl
+    ): RoomParkingRepository
 
     @Binds
     @Singleton
@@ -48,4 +50,10 @@ abstract class RepositoryModule {
     abstract fun bindRegisterRepository(
         registerRepositoryImpl: RegisterRepositoryImpl
     ): RegisterRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindKakaoRepository(
+        kakaoApiRepositoryImpl: KakaoApiRepositoryImpl
+    ): KakaoApiRepository
 }
